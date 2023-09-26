@@ -1,0 +1,14 @@
+tamaño 13 x 13 cuadricula
+serpiente en 7,7
+manzana inical 11,3
+longitud inical =3
+movimiento con wasd
+no se puede devolver de su pocision
+manana aparece de forma aleatoria
+crecimiento de la serpiente por manzana =1
+Termina juego cuando:   
+    serpiente toca  cola
+    serpiente choca pared
+
+Cosas que recuerdo:
+la cabeza es la cola

@@ -46,16 +46,16 @@ direccion='right'
 cambia_a=direccion
                 
 while True:
-    for event in pygame.event.get():# esto muestra el movimiento (vere si lo puedo optimizar)
-        if event.type==pygame.K_s:
+    for event in pygame.event.get():  # esto muestra el movimiento (vere si lo puedo optimizar)
+        if event.type== pygame.KEYDOWN:
             if event.key== pygame.K_d:
-                cambia_a='right'
+                cambia_a= 'right'
             if event.key== pygame.K_a:
-                cambia_a='left'
+                cambia_a= 'left'
             if event.key== pygame.K_w:
-                cambia_a='up'
+                cambia_a= 'up'
             if event.key== pygame.K_s:
-                cambia_a='down'     
+                cambia_a= 'down'     
         #evita la mezcla de 2 botones a oprimirce juntos se anulen          uno anula al otro   
     if cambia_a =='up' and direccion != 'down': direccion= 'up'
     if cambia_a =='down' and direccion != 'up': direccion= 'down'

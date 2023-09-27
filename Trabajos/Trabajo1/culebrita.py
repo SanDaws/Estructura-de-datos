@@ -10,7 +10,7 @@ def game_over():
     rectangulo_GO.midtop=(ancho_ventana/2,alto_ventana/2) #ubicacion del rectangulo
     ventana.blit(superficie_GO,rectangulo_GO)    #hace que el rectangulo sea una superficie
     pygame.display.flip()   #ni idea
-    time.sleep(2)# tiempo de 2 segundos              (debo ver como hago un while con esto)
+    time.sleep(15)# tiempo de 2 segundos              (debo ver como hago un while con esto)
     pygame.quit()# se acaba el juego                (debo poner que esto sea condicional para reiniciar)
     quit()#se acaba el programa                     (si lo anteior sucede, esto no puede suceder)
 
@@ -19,12 +19,12 @@ vel_serpiente= 15 #velocidad de la serpiente
 ancho_ventana= 720  #tamaño en x                                
 alto_ventana=480 #tamaño en Y       #creo que se puede quitar(@optimizar)
         #72 x 48 de interfaz, ahora necesito hacerlo de 13 x 13(delimitar sin reducir, puedo aumentar el tamaño de todo)
-        #si esto arranca, establecemos un cuadro 130x130, y en ese cuadro se juega
+        #si esto arranca, establecemos un cuadro 130x130, y en ese cuadro se juega usando las medidas como varialbes en la posicion de la manzana y de la muerte de la serpiente
 #colores
 black = pygame.Color(0, 0, 0)
 white = pygame.Color(255, 255, 255)            
 red = pygame.Color(255, 0, 0)
-green = pygame.Color(0, 255, 0)
+Orange = pygame.Color(225, 128, 0)
 blue = pygame.Color(0, 0, 255)
 
 pygame.init() #epecempos el juego
@@ -32,11 +32,12 @@ pygame.display.set_caption('culebrita') #el nombre de la ventana
 ventana= pygame.display.set_mode((ancho_ventana,alto_ventana))#revisar si solo funciona para esto el tamaño de la pantalla
 fps= pygame.time.Clock() #contador de frames per second
 
-serp_posicion_inicial=[ancho_ventana//2,alto_ventana//2]    #serpiente inicial
+#serp_posicion_inicial=[ancho_ventana//2,alto_ventana//2]    #serpiente inicial
 serp_posicion= [100,50]     #cabeza de la serpiente
 serp_cuerpo=[[100,50],
              [90, 50],
-             [80,50] ] #cuerpo de la serpiente
+             [80,50],
+             [70,50] ] #cuerpo de la serpiente
 manz_posicion=[random.randrange(1,(ancho_ventana//10))*10,  #define lo aleatorio de la serpiente
                random.randrange(1,(ancho_ventana//10))*10]  #alterar para una version para inicial no aleatoria
 manz_aparece= True #aparecen manzanas
@@ -82,7 +83,7 @@ while True:
     manz_aparece = True
     ventana.fill(black)
     for pos in serp_cuerpo:
-        pygame.draw.rect(ventana, green, pygame.Rect(
+        pygame.draw.rect(ventana, Orange, pygame.Rect(
         pos[0], pos[1], 10, 10))
         
     pygame.draw.rect(ventana, white, pygame.Rect(

@@ -82,43 +82,35 @@ def main():
 			random.randrange(1, (alto_ventana//10)) * 10]
         manz_aparece = True
         ventana.fill(black)
+        for pos in serp_cuerpo:
+            pygame.draw.rect(ventana, green, pygame.Rect(
+            pos[0], pos[1], 10, 10))
+            
+        pygame.draw.rect(ventana, white, pygame.Rect(
+        manz_posicion[0], manz_posicion[1], 10, 10))
 
+        #game over
+        if serp_posicion[0] < 0 or serp_posicion[0] > ancho_ventana-10:
+            game_over()
+        if serp_posicion[1] < 0 or serp_posicion[1] > alto_ventana-10:
+            game_over()
 
-        # Refresh game screen
+        # Touching the snake body
+        for block in serp_cuerpo[1:]:
+            if serp_posicion[0] == block[0] and serp_posicion[1] == block[1]:
+                game_over()
+
+        # Actualiza pantalla
         pygame.display.update()
 
-        # Frame Per Second /Refresh Rate
+        # refrescar frames
         fps.tick(vel_serpiente)
+        
 
 		            
 main()
 # Main Function
 
 
-    
-if not manz_aparece:
-    fruit_position = [random.randrange(1, (ancho_ventana//10)) * 10,
-                    random.randrange(1, (alto_ventana//10)) * 10]
-    
-manz_aparece = True
-ventana.fill(black)
-
-for pos in serp_cuerpo:
-    pygame.draw.rect(ventana, green, pygame.Rect(
-    pos[0], pos[1], 10, 10))
-    
-pygame.draw.rect(ventana, white, pygame.Rect(
-fruit_position[0], fruit_position[1], 10, 10))
-
-# Game Over conditions
-if serp_posicion[0] < 0 or serp_posicion[0] > window_x-10:
-    game_over()
-if serp_posicion[1] < 0 or serp_posicion[1] > window_y-10:
-    game_over()
-
-# Touching the snake body
-for block in serp_cuerpo[1:]:
-    if serp_posicion[0] == block[0] and serp_posicion[1] == block[1]:
-        game_over()
 
 

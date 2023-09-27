@@ -60,15 +60,15 @@ while True:
     if cambia_a =='up' and direccion != 'down': direccion= 'up'
     if cambia_a =='down' and direccion != 'up': direccion= 'down'
     if cambia_a =='left' and direccion != 'right': direccion= 'left'
-    if cambia_a =='rigth' and direccion != 'left': direccion= 'right'
+    if cambia_a =='right' and direccion != 'left': direccion= 'right'
     #movimineto
-    if direccion == 'UP':
+    if direccion == 'up':
         serp_posicion[1] -= 10
-    if direccion == 'DOWN':
+    if direccion == 'down':
         serp_posicion[1] += 10
-    if direccion == 'LEFT':
+    if direccion == 'left':
         serp_posicion[0] -= 10
-    if direccion == 'RIGHT':
+    if direccion == 'right':
         serp_posicion[0] += 10
     #intecambia posiciones
     serp_cuerpo.insert(0, list(serp_posicion))

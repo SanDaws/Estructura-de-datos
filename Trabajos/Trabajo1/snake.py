@@ -71,8 +71,8 @@ def manzana_nueva(serpiente, manzana):
         return None
 
 def mostrar_mensaje_perdida():
-    fuente = pygame.font.Font(None, 36)
-    mensaje = fuente.render("¡Perdiste el juego!", True, negro)
+    fuente = pygame.font.SysFont('Agency FB', 50)
+    mensaje = fuente.render("¡Perdiste el juego!", True, rojo)
     ventana.blit(mensaje, (ancho // 2 - mensaje.get_width() // 2, alto // 2 - mensaje.get_height() // 2))
 
 jugando = True
@@ -84,7 +84,7 @@ jugadas = 0
 tiempo_anterior = pygame.time.get_ticks()  # Inicializa el temporizador
 
 # Velocidad de la serpiente (número de celdas por segundo)
-velocidad_serpiente = 1  # Puedes ajustar este valor para hacerla más lenta
+velocidad_serpiente = 15  # Puedes ajustar este valor para hacerla más lenta
 
 # Bucle principal del juego
 while jugando:

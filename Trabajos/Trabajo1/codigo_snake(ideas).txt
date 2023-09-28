@@ -1,0 +1,6 @@
+>>lin 7 -17: cambiar todo por constantes(saltar procesos de dimensionamiento)
+>> lin 21-24: cambiar colores(opcion para evitar problemas con el codigo)
+>>lin 27,34,38: cambiar por #
+>>> felicitarlos por definirlo todo en funciones(nos falto a nosotros)
+<<< todo esta puesto en escala(curioso)
+>>> lin 90: cambiar color por la variable color

@@ -3,6 +3,20 @@ import time
 import random
 
 #me baso en el codigo de geeksforges, luego veo como lo hago mas optimo 
+pygame.init() #epecempos el juego
+vel_serpiente= 15 #velocidad de la serpiente
+ancho_ventana= 720  #tamaño en x                                
+alto_ventana=480 #tamaño en Y       #creo que se puede quitar(@optimizar)
+        #72 x 48 de interfaz, ahora necesito hacerlo de 13 x 13(delimitar sin reducir, puedo aumentar el tamaño de todo)
+        #si esto arranca, establecemos un cuadro 130x130, y en ese cuadro se juega usando las medidas como varialbes en la posicion de la manzana y de la muerte de la serpiente
+
+#colores
+black = pygame.Color(0, 0, 0)
+white = pygame.Color(255, 255, 255)            
+red = pygame.Color(255, 0, 0)
+Orange = pygame.Color(225, 128, 0)
+blue = pygame.Color(0, 0, 255)
+
 def game_over():
     letra_tipo= pygame.font.SysFont('Agency FB', 50)     #establecemos una letra para fuente (use una que me gusto, no se si esta en otro sistema)
     superficie_GO= letra_tipo.render('Fin del Juego', True, pygame.Color(225,0,0))  #eso lo pondremos en un color y que diga algo
@@ -11,23 +25,11 @@ def game_over():
     ventana.blit(superficie_GO,rectangulo_GO)    #hace que el rectangulo sea una superficie
     pygame.display.flip()   #ni idea
     time.sleep(15)# tiempo de 2 segundos              (debo ver como hago un while con esto)
-    pygame.quit()# se acaba el juego                (debo poner que esto sea condicional para reiniciar)
-    quit()#se acaba el programa                     (si lo anteior sucede, esto no puede suceder)
+    
 
 
-vel_serpiente= 15 #velocidad de la serpiente
-ancho_ventana= 720  #tamaño en x                                
-alto_ventana=480 #tamaño en Y       #creo que se puede quitar(@optimizar)
-        #72 x 48 de interfaz, ahora necesito hacerlo de 13 x 13(delimitar sin reducir, puedo aumentar el tamaño de todo)
-        #si esto arranca, establecemos un cuadro 130x130, y en ese cuadro se juega usando las medidas como varialbes en la posicion de la manzana y de la muerte de la serpiente
-#colores
-black = pygame.Color(0, 0, 0)
-white = pygame.Color(255, 255, 255)            
-red = pygame.Color(255, 0, 0)
-Orange = pygame.Color(225, 128, 0)
-blue = pygame.Color(0, 0, 255)
 
-pygame.init() #epecempos el juego
+
 pygame.display.set_caption('culebrita') #el nombre de la ventana
 ventana= pygame.display.set_mode((ancho_ventana,alto_ventana))#revisar si solo funciona para esto el tamaño de la pantalla
 fps= pygame.time.Clock() #contador de frames per second
@@ -47,6 +49,10 @@ cambia_a=direccion
                 
 while True:
     for event in pygame.event.get():  # esto muestra el movimiento (vere si lo puedo optimizar)
+        if event.type == pygame.QUIT:  # Manejo de eventos de cierre de ventana
+            pygame.quit()# se acaba el juego                (debo poner que esto sea condicional para reiniciar)
+            quit()#se acaba el programa                     (si lo anteior sucede, esto no puede suceder)
+
         if event.type== pygame.KEYDOWN:
             if event.key== pygame.K_d:
                 cambia_a= 'right'

@@ -72,11 +72,11 @@ def manzana_nueva(serpiente, manzana):
 
 def mostrar_mensaje_perdida():
     fuente = pygame.font.Font(None, 36)
-    mensaje = fuente.render("¡Perdiste el juego!", True, negro)
+    mensaje = fuente.render("¡Perdiste el juego!", True, rojo)
     ventana.blit(mensaje, (ancho // 2 - mensaje.get_width() // 2, alto // 2 - mensaje.get_height() // 2))
 
 jugando = True
-direccion = "derecha"  # Comienza moviéndose hacia la derecha
+direccion = "arriba"  # Comienza moviéndose hacia la derecha
 serpiente = [(6, 6), (6, 7), (6, 8)]
 manzana = [(10, 2)]
 controlador = [False, random.randint(1, 10), True]

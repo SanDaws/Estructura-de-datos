@@ -12,3 +12,12 @@ Termina juego cuando:
 
 Cosas que recuerdo:
 la cabeza es la cola
+
+
+
+jueves 27:
+colocar mensaje de victoria
+inceremento de volicidad(opcional)
+score al perder
+comentar el codigo
+notacion big 0 del codigo

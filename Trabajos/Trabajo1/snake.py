@@ -103,13 +103,13 @@ while jugando:
             elif evento.key == pygame.K_DOWN and direccion != "arriba":
                 direccion = "abajo"
 
-    if controlador[0]:
-        jugadas += 1
-        if controlador[1] == jugadas:
-            manzana_nueva(serpiente, manzana)
-            controlador[0] = False
-            controlador[1] = random.randint(1, 10)
-            jugadas = 0
+        if controlador[0]:
+            jugadas += 1
+            if controlador[1] == jugadas:
+                manzana_nueva(serpiente, manzana)
+                controlador[0] = False
+                controlador[1] = random.randint(1, 10)
+                jugadas = 0
 
     if pygame.time.get_ticks() - tiempo_anterior >= 1000 / velocidad_serpiente:
         tiempo_anterior = pygame.time.get_ticks()

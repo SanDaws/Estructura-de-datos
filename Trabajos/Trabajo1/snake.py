@@ -21,12 +21,12 @@ pygame.display.set_caption("Snake Game")
 # Colores
 blanco = (255, 255, 255)
 negro = (0, 0, 0)
-verde = (0, 255, 0)
+naranja = (255, 128, 0)
 rojo = (255, 0, 0)
 
 def serpiente_pantalla(serpiente):
     for segmento in serpiente:
-        pygame.draw.rect(ventana, verde,
+        pygame.draw.rect(ventana, naranja,
                          (segmento[0] * tamanio_celda, segmento[1] * tamanio_celda, tamanio_celda, tamanio_celda))
 
 def manzana_pantalla(manzana):
@@ -72,7 +72,7 @@ def manzana_nueva(serpiente, manzana):
 
 def mostrar_mensaje_perdida():
     fuente = pygame.font.Font(None, 36)
-    mensaje = fuente.render("¡Perdiste el juego!", True, (255, 0, 0))
+    mensaje = fuente.render("¡Perdiste el juego!", True, negro)
     ventana.blit(mensaje, (ancho // 2 - mensaje.get_width() // 2, alto // 2 - mensaje.get_height() // 2))
 
 jugando = True
@@ -116,9 +116,7 @@ while jugando:
         moverse(direccion, serpiente, manzana, controlador)
 
     ventana.fill(negro)
-    for fila in range(ancho_tablero):
-        for columna in range(alto_tablero):
-            pygame.draw.rect(ventana, blanco, (columna * tamanio_celda, fila * tamanio_celda, tamanio_celda, tamanio_celda), 1)
+    
 
     if controlador[2]:
         serpiente_pantalla(serpiente)

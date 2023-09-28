@@ -71,7 +71,7 @@ def manzana_nueva(serpiente, manzana):
         return None
 
 def mostrar_mensaje_perdida():
-    fuente = pygame.font.SysFont('Agency FB', 50)
+    fuente = pygame.font.SysFont('Agency FB', 50)   # fuente y tamaño de linea de perdida
     mensaje = fuente.render("¡Perdiste el juego!", True, rojo)
     ventana.blit(mensaje, (ancho // 2 - mensaje.get_width() // 2, alto // 2 - mensaje.get_height() // 2))
 

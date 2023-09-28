@@ -76,7 +76,7 @@ def mostrar_mensaje_perdida():
     ventana.blit(mensaje, (ancho // 2 - mensaje.get_width() // 2, alto // 2 - mensaje.get_height() // 2))
 
 jugando = True
-direccion = "arriba"  # Comienza moviéndose hacia la derecha
+direccion = "arriba"  # Comienza moviéndose hacia arriba
 serpiente = [(6, 6), (6, 7), (6, 8)]
 manzana = [(10, 2)]
 controlador = [False, random.randint(1, 10), True]

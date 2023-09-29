@@ -85,7 +85,7 @@ jugadas = 0
 tiempo_anterior = pygame.time.get_ticks()  # Inicializa el temporizador
 
 # Velocidad de la serpiente (número de celdas por segundo)
-velocidad_serpiente = 15  # Puedes ajustar este valor para hacerla más lenta
+velocidad_serpiente = 6  # Puedes ajustar este valor para hacerla más lenta
 
 # Bucle principal del juego
 while jugando:

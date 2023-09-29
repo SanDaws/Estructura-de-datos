@@ -59,9 +59,7 @@ def moverse(direccion, serpiente, manzana, controlador):
         serpiente.insert(0, cabeza) # La serpiente crece
         manzana.append((14, 14)) # Se representa la mazana fuera del tablero
         controlador[0] = True # Se actualiza el controlador de de la manzana
-        controlador[3]+=1
-        if controlador[3]==5:
-            mostrar_mensaje_ganar()
+        controlador[3]+=1 # Este es el contador del puntaje
     # Si no pasa ninguno nde los casos anteriores, simplemente avanza la serpiente
     else:
         serpiente.insert(0, cabeza)
@@ -77,8 +75,6 @@ def manzana_nueva(serpiente, manzana):
     if coordenadas_disponibles:
         posicion = random.choice(coordenadas_disponibles) # Se escoje una coordenada de manera aleatoria para dibujar la manzana
         manzana[0] = posicion # Se asigna la coordenada para la manzana
-    elif len(serpiente)==5:
-        mostrar_mensaje_ganar()
     else:
         return None #Si no hay espacio no se retorna nada
 
@@ -137,8 +133,6 @@ while jugando:
                 jugadas = 0
         # Si la serpiente ocupa la totaliodad del tablero se llama la funcion mostrar_mensaje_ganar
     
-    print(len(serpiente))
-
     #Se estable un reloj interno, el temporizador se comprueba constantemente para ejecutar la funcion de moverse automaticamente
     if pygame.time.get_ticks() - tiempo_anterior >= 1000 / velocidad_serpiente:
         tiempo_anterior = pygame.time.get_ticks()
@@ -146,17 +140,23 @@ while jugando:
 
     # Se actualiza constamente la pantalla en color negro, esto para desdibijar el recorrido de la serpiente
     ventana.fill(negro)
+
     # Mostrar el puntaje en la parte superior izquierda
     fuente_puntaje = pygame.font.Font(None, 24)
     texto_puntaje = fuente_puntaje.render(f"Puntaje: {controlador[3]}", True, blanco)
     ventana.blit(texto_puntaje, (10, 10))
+
     # Si aun no se ha perdido que se sigan dibujando la serpiente y la manzana
-    if controlador[2]:
+    if controlador[2] and len(serpiente)<169:
         serpiente_pantalla(serpiente)
         manzana_pantalla(manzana)
+    # Si la serpiente ocupa todo el espacio del tablero se llama la funcion mostrar_mensaje_ganar
+    elif len(serpiente)==169:
+        mostrar_mensaje_ganar()
     # Si se pierde el juego, se llama a la funcion mostrar_mensaje_perdida
     else:
         mostrar_mensaje_perdida()
     # Cada vez que suceda un envento, es necesario que se actualice la pantalla para poder darle continuidad al juego
     pygame.display.update()
 
+pygame.quit()

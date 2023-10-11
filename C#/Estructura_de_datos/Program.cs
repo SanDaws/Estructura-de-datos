@@ -1,10 +1,14 @@
-﻿using system;
-namespace Estructura_de_datos;
+﻿using System;
+namespace Estructura_de_datos{
 
 class Program
 {
     static void Main(string[] args)
     {
-        Console.WriteLine("Hello, World!");
+        Console.WriteLine(int.Parse(Console.ReadLine())^2);
     }
 }
+
+
+}
+

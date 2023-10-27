@@ -10,3 +10,4 @@ más de 4096 valores enteros no negativos, menores a 10000, sin repetidos, y sep
 sí por un espacio en blanco. Al final de cada línea hay un valor -1 que no hace parte de la serie correspondiente.
 Output
 La salida debe contener C líneas, cada una con la correspondiente cantidad de hijos únicos."""
+

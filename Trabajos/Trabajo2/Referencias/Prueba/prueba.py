@@ -31,11 +31,11 @@ BASE_OFFSET_X = (WIDTH / 2) - ((LETRAS / 2) * DX) - ((LETRAS / 2) * CASILLA_ANCH
 BASE_OFFSET_Y = (HEIGHT / 2) - ((INTENTOS / 2) * DY) - ((INTENTOS / 2) * CASILLA_ALTO) + (
             ((INTENTOS + 1) % 2) * (DY / 2))
 
-def main():
+ACIERTOS = 0
+FALLOS = 0
+PARTIDAS = 0
 
-    ACIERTOS = 0
-    FALLOS = 0
-    PARTIDAS = 0
+def main():
     global palabras
     palabras = [word.replace("\n", "") for word in list(open("wordlist.txt"))]
     clock = pygame.time.Clock()
@@ -43,7 +43,7 @@ def main():
     text = pygame.font.Font(None, 40)
     def juego(letras):
         letras=int(letras)
-        global LETRAS
+        global LETRAS, ACIERTOS, PARTIDAS, FALLOS
         LETRAS = letras
         LONGITUD_PALABRA = LETRAS
         used_words = []
@@ -73,7 +73,16 @@ def main():
                 # Option to restart game
                 if flag_win or flag_lose:
                     if event.type == pygame.KEYDOWN:
+                        if flag_win:
+                            ACIERTOS += 1
+                            PARTIDAS += 1
+                        if flag_lose:
+                            FALLOS += 1
+                            PARTIDAS += 1
                         if event.key == pygame.K_r:
+                            mensaje = f'Partidas: {PARTIDAS}, Aciertos: {ACIERTOS}, Fallos: {FALLOS}'
+                            with open('historial', 'w') as archivo:
+                                archivo.write(mensaje)
                             main()
                 else:
                     # Upon keypress
@@ -101,6 +110,7 @@ def main():
                                 if event.unicode.isalpha():
                                     curr_word += event.unicode.upper()
                                     curr_letter += 1
+
             SCREEN.fill(GRIS_OSCURO)
             # Draw title and underline
             draw_title(letter_font)
@@ -151,6 +161,7 @@ def main():
                 x_pos = BASE_OFFSET_X - (CASILLA_ANCHO * (LETRAS / 2))
                 y_pos = BASE_OFFSET_Y + (DY * 7) + (CASILLA_ALTO * INTENTOS)
                 SCREEN.blit(text_surface, (x_pos, y_pos))
+
             if curr_word:
                 for letter_index in range(len(curr_word)):
                     word_surface = letter_font.render(curr_word[letter_index], True, BLANCO)
@@ -204,6 +215,7 @@ def main():
                     elif len(used_words) == INTENTOS:
                         flag_lose = True
 
+
             pygame.display.update()
             clock.tick(FPS)
 
@@ -243,6 +255,19 @@ def main():
                     return selected_option
 
             y += 60
+
+        if PARTIDAS!=0:
+            text = font.render(f'Partidas: {PARTIDAS}', True, black)
+            text_rect = text.get_rect(center=(400, 480))
+            SCREEN.blit(text, text_rect)
+
+            text = font.render(f'Aciertos: {ACIERTOS}', True, black)
+            text_rect = text.get_rect(center=(400, 500))
+            SCREEN.blit(text, text_rect)
+
+            text = font.render(f'Fallos: {FALLOS}', True, black)
+            text_rect = text.get_rect(center=(400, 520))
+            SCREEN.blit(text, text_rect)
 
         pygame.display.flip()
 

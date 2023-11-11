@@ -19,17 +19,15 @@ INTENTOS = 6
 
 
 
-CASILLA_ANCHO = 50 # Define el ancho de cada celda en la cuadrícula en píxeles.
-CASILLA_ALTO = 50 #  Define la altura de cada celda en la cuadrícula en píxeles.
+CASILLA_ANCHO = 50
+CASILLA_ALTO = 50
 # Pixels between each Rect
-DX = 10 #Representa el espacio horizontal (en píxeles) entre cada celda en una fila.
-DY = 10 # Representa el espacio vertical (en píxeles) entre cada fila de celdas.
-#Relleno Adicional (Padding):
-X_PADDING = 5 # Agrega un espacio adicional (en píxeles) entre el borde de la celda y el texto dentro de la celda (padding horizontal).
-Y_PADDING = 5 #: Agrega un espacio adicional (en píxeles) entre el borde de la celda y el texto dentro de la celda (padding vertical).
-# Posición Inicial de la Cuadrícula (BASE_OFFSET_X y BASE_OFFSET_Y):
-# La coordenada superior a la izquierda donde se dibujará el primer rectángulo, debe ser simétrica. Representa el número de rectángulos, los píxeles entre rectángulos y los tamaños de rectángulos.
-BASE_OFFSET_X = (WIDTH / 2) - ((LETRAS / 2) * DX) - ((LETRAS / 2) * CASILLA_ANCHO) + (((LETRAS + 1) % 2) * (DX / 2)) # Calcula la posición X donde se debe iniciar la cuadrícula en función del ancho total de la pantalla (WIDTH), el número de letras (LETRAS), el espacio horizontal entre celdas (DX), el ancho de cada celda (CASILLA_ANCHO), y el espaciado adicional (X_PADDING). La fórmula ajusta la posición según si el número de letras es par o impar.
+DX = 10
+DY = 10
+X_PADDING = 5
+Y_PADDING = 5
+# Leftmost topmost coordinate where the first rect will be drawn, should be symmetrical. Accounts for number of rects, pixels between rects and rect sizes.
+BASE_OFFSET_X = (WIDTH / 2) - ((LETRAS / 2) * DX) - ((LETRAS / 2) * CASILLA_ANCHO) + (((LETRAS + 1) % 2) * (DX / 2))
 BASE_OFFSET_Y = (HEIGHT / 2) - ((INTENTOS / 2) * DY) - ((INTENTOS / 2) * CASILLA_ALTO) + (
             ((INTENTOS + 1) % 2) * (DY / 2)) # Calcula la posición Y donde se debe iniciar la cuadrícula en función de la altura total de la pantalla (HEIGHT), el número de intentos (INTENTOS), el espacio vertical entre celdas (DY), la altura de cada celda (CASILLA_ALTO), y el espaciado adicional (Y_PADDING). La fórmula ajusta la posición según si el número de intentos es par o impar.
 
@@ -40,10 +38,10 @@ PARTIDAS = 0
 #Se configuran fuentes y se inicia el reloj de Pygame.
 def main():
     global palabras
-    palabras = [word.replace("\n", "") for word in list(open("wordlist.txt"))] # # Se lee una lista de palabras desde un archivo ("wordlist.txt") y se almacenan en la variable palabras.
-    clock = pygame.time.Clock() # Crea un objeto Clock de Pygame que se utilizará para controlar la velocidad del juego (FPS)
-    letter_font = pygame.font.Font(None, 65) # Crea una fuente de Pygame con un tamaño de 65 píxeles para renderizar las letras en el juego.
-    text = pygame.font.Font(None, 40) # Crea otra fuente de Pygame con un tamaño de 40 píxeles que se utilizará para renderizar texto adicional.
+    palabras = [word.replace("\n", "") for word in list(open("wordlist.txt"))]
+    clock = pygame.time.Clock()
+    letter_font = pygame.font.Font(None, 65)
+    text = pygame.font.Font(None, 40)
     def juego(letras):
         letras=int(letras)
         global LETRAS, ACIERTOS, PARTIDAS, FALLOS
@@ -142,7 +140,7 @@ def main():
                 y_pos = BASE_OFFSET_Y - (DY * 4)
                 SCREEN.blit(text_surface, (x_pos, y_pos))
                 timer_flag_1 += 1
-            if flag_not_enough_letters:
+            if flag_not_enough_letters: #error de faltan letras
                 timer_flag_1 = 0
                 flag_invalid_word = False
                 text_surface = text.render("Completa la palabra", True, ROJO)

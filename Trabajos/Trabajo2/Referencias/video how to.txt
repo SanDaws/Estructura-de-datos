@@ -1,1 +1,25 @@
 https://www.youtube.com/watch?v=mJ2hPj3kURg&ab_channel=baraltech
+
+Trabajo2:
+Wordle:
+interfaz grafica (opcional)
+> se debe poder elegir dificulta( 4 a 8 letras):
+		>>facil 4
+		>> medio 6
+		>> dificil 8
+> diferente palabra( escoger palabra aleatoria para cada partida)
+		>>volver a jugar
+		>> guardamos en un archivo el historial(palabra: intentos)
+> mostrar resultados:
+		>>
+>lemario(español o ingles)
+>capacidad maxima de intentos : 6
+
+
+Wordle en general:
+aparece una palabra:
+ si la letra esta:
+	verde(color variable): esta en el lugar correcto
+	amarillo(color variable): estan en la palabra en el lugar equivocado	
+Si la letra no esta:
+	rojo(color variable): no esta

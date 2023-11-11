@@ -19,59 +19,68 @@ INTENTOS = 6
 
 
 
-CASILLA_ANCHO = 50
-CASILLA_ALTO = 50
+CASILLA_ANCHO = 50 # Define el ancho de cada celda en la cuadrícula en píxeles.
+CASILLA_ALTO = 50 #  Define la altura de cada celda en la cuadrícula en píxeles.
 # Pixels between each Rect
-DX = 10
-DY = 10
-X_PADDING = 5
-Y_PADDING = 5
-# Leftmost topmost coordinate where the first rect will be drawn, should be symmetrical. Accounts for number of rects, pixels between rects and rect sizes.
-BASE_OFFSET_X = (WIDTH / 2) - ((LETRAS / 2) * DX) - ((LETRAS / 2) * CASILLA_ANCHO) + (((LETRAS + 1) % 2) * (DX / 2))
+DX = 10 #Representa el espacio horizontal (en píxeles) entre cada celda en una fila.
+DY = 10 # Representa el espacio vertical (en píxeles) entre cada fila de celdas.
+#Relleno Adicional (Padding):
+X_PADDING = 5 # Agrega un espacio adicional (en píxeles) entre el borde de la celda y el texto dentro de la celda (padding horizontal).
+Y_PADDING = 5 #: Agrega un espacio adicional (en píxeles) entre el borde de la celda y el texto dentro de la celda (padding vertical).
+# Posición Inicial de la Cuadrícula (BASE_OFFSET_X y BASE_OFFSET_Y):
+# La coordenada superior a la izquierda donde se dibujará el primer rectángulo, debe ser simétrica. Representa el número de rectángulos, los píxeles entre rectángulos y los tamaños de rectángulos.
+BASE_OFFSET_X = (WIDTH / 2) - ((LETRAS / 2) * DX) - ((LETRAS / 2) * CASILLA_ANCHO) + (((LETRAS + 1) % 2) * (DX / 2)) # Calcula la posición X donde se debe iniciar la cuadrícula en función del ancho total de la pantalla (WIDTH), el número de letras (LETRAS), el espacio horizontal entre celdas (DX), el ancho de cada celda (CASILLA_ANCHO), y el espaciado adicional (X_PADDING). La fórmula ajusta la posición según si el número de letras es par o impar.
 BASE_OFFSET_Y = (HEIGHT / 2) - ((INTENTOS / 2) * DY) - ((INTENTOS / 2) * CASILLA_ALTO) + (
-            ((INTENTOS + 1) % 2) * (DY / 2))
+            ((INTENTOS + 1) % 2) * (DY / 2)) # Calcula la posición Y donde se debe iniciar la cuadrícula en función de la altura total de la pantalla (HEIGHT), el número de intentos (INTENTOS), el espacio vertical entre celdas (DY), la altura de cada celda (CASILLA_ALTO), y el espaciado adicional (Y_PADDING). La fórmula ajusta la posición según si el número de intentos es par o impar.
 
+# Seguimiento de las estadísticas del jugador a lo largo de múltiples partidas.
 ACIERTOS = 0
 FALLOS = 0
 PARTIDAS = 0
-
+#Se configuran fuentes y se inicia el reloj de Pygame.
 def main():
     global palabras
-    palabras = [word.replace("\n", "") for word in list(open("wordlist.txt"))]
-    clock = pygame.time.Clock()
-    letter_font = pygame.font.Font(None, 65)
-    text = pygame.font.Font(None, 40)
+    palabras = [word.replace("\n", "") for word in list(open("wordlist.txt"))] # # Se lee una lista de palabras desde un archivo ("wordlist.txt") y se almacenan en la variable palabras.
+    clock = pygame.time.Clock() # Crea un objeto Clock de Pygame que se utilizará para controlar la velocidad del juego (FPS)
+    letter_font = pygame.font.Font(None, 65) # Crea una fuente de Pygame con un tamaño de 65 píxeles para renderizar las letras en el juego.
+    text = pygame.font.Font(None, 40) # Crea otra fuente de Pygame con un tamaño de 40 píxeles que se utilizará para renderizar texto adicional.
     def juego(letras):
         letras=int(letras)
         global LETRAS, ACIERTOS, PARTIDAS, FALLOS
         LETRAS = letras
         LONGITUD_PALABRA = LETRAS
-        used_words = []
-        curr_word = ""
-        word_count = 0
-        curr_letter = 0
-        rects = []
+        used_words = [] # Lista que almacenará las palabras ya utilizadas por el jugador.
+        curr_word = "" # Variable que almacena la palabra actualmente ingresada por el jugador.
+        word_count = 0 # Contador de palabras ingresadas correctamente.
+        curr_letter = 0 # Contador de letras ingresadas en la palabra actual.
+        rects = [] #  Lista que contendrá las coordenadas de las celdas en la cuadrícula.
+        #  Banderas para controlar diferentes estados del juego.
         flag_win = False
         flag_lose = False
         flag_invalid_word = False
         flag_not_enough_letters = False
+        # Temporizadores para gestionar la visualización de mensajes en la pantalla.
         timer_flag_1 = 0
         timer_flag_2 = 0
         print(letras)
-        posibles=[palabra for palabra in palabras if len(palabra) == letras]
+        posibles=[palabra for palabra in palabras if len(palabra) == letras] # Lista de palabras con la longitud especificada por el jugador.
         print(posibles)
-        palabra = random.choice(posibles)
+        palabra = random.choice(posibles) # Se elige aleatoriamente una palabra de la lista de posibles palabras.
         print(palabra)
+        # Se realizan algunas verificaciones (assert) para asegurarse de que la palabra seleccionada cumple con ciertas condiciones.
         assert (len(palabra) == LONGITUD_PALABRA)
         assert (palabra.islower())
+        
+        #Bucle Principal del Juego:
+
         while True:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    pygame.quit()
-                    sys.exit()
+            for event in pygame.event.get(): # Itera sobre todos los eventos de Pygame que han ocurrido desde la última vez que se llamó a pygame.event.get(). Los eventos pueden incluir acciones del teclado, ratón, etc
+                if event.type == pygame.QUIT: # Comprueba si el tipo de evento es "pygame.QUIT", lo que significa que el usuario ha intentado cerrar la ventana del juego.
+                    pygame.quit() # Se realiza una limpieza adecuada cerrando Pygame
+                    sys.exit() # Se sale del programa (sys.exit()).
 
                 # Option to restart game
-                if flag_win or flag_lose:
+                if flag_win or flag_lose: # Si la bandera flag_win o flag_lose está activa, significa que el juego ha terminado (ya sea ganado o perdido).
                     if event.type == pygame.KEYDOWN:
                         if flag_win:
                             ACIERTOS += 1

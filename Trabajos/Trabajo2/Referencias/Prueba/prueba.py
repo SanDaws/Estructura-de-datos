@@ -21,12 +21,12 @@ INTENTOS = 6
 
 CASILLA_ANCHO = 50
 CASILLA_ALTO = 50
-# Pixels between each Rect
+# Pixeles entre cada recta
 DX = 10
 DY = 10
 X_PADDING = 5
 Y_PADDING = 5
-# Leftmost topmost coordinate where the first rect will be drawn, should be symmetrical. Accounts for number of rects, pixels between rects and rect sizes.
+#coordenadas importantes
 BASE_OFFSET_X = (WIDTH / 2) - ((LETRAS / 2) * DX) - ((LETRAS / 2) * CASILLA_ANCHO) + (((LETRAS + 1) % 2) * (DX / 2))
 BASE_OFFSET_Y = (HEIGHT / 2) - ((INTENTOS / 2) * DY) - ((INTENTOS / 2) * CASILLA_ALTO) + (
             ((INTENTOS + 1) % 2) * (DY / 2))
@@ -41,6 +41,7 @@ def main():
     clock = pygame.time.Clock()
     letter_font = pygame.font.Font(None, 65)
     text = pygame.font.Font(None, 40)
+    #funcion del juego
     def juego(letras):
         letras=int(letras)
         global LETRAS, ACIERTOS, PARTIDAS, FALLOS
@@ -133,7 +134,7 @@ def main():
                 y_pos = BASE_OFFSET_Y - (DY * 4)
                 SCREEN.blit(text_surface, (x_pos, y_pos))
                 timer_flag_1 += 1
-            if flag_not_enough_letters:
+            if flag_not_enough_letters: #error de faltan letras
                 timer_flag_1 = 0
                 flag_invalid_word = False
                 text_surface = text.render("Completa la palabra", True, ROJO)

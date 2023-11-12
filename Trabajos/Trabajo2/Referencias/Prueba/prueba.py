@@ -124,6 +124,8 @@ def main():
             # Draw title and underline
             draw_title(letter_font)
             # Draws base 5x6 grid for letters
+            BASE_OFFSET_X = (WIDTH - (CASILLA_ANCHO * LETRAS) - (DX * (LETRAS - 1))) / 2
+            BASE_OFFSET_Y = (HEIGHT - (CASILLA_ALTO * INTENTOS) - (DY * (INTENTOS - 1))) / 2
             for y in range(INTENTOS):
                 row_rects = []
                 for x in range(LETRAS):

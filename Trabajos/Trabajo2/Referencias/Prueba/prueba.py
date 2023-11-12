@@ -65,13 +65,13 @@ def main():
         print(palabra)
         assert (len(palabra) == LONGITUD_PALABRA)
         assert (palabra.islower())
-        while True:
+        while True:                         #inico del bucle
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
 
-                # Option to restart game
+                # Reinicio del juego
                 if flag_win or flag_lose:
                     if event.type == pygame.KEYDOWN:
                         if flag_win:
@@ -86,10 +86,10 @@ def main():
                                 archivo.write(mensaje)
                             main()
                 else:
-                    # Upon keypress
+                    
                     if event.type == pygame.KEYDOWN:
                         if event.key == pygame.K_BACKSPACE:
-                            # Prevents IndexErrors
+                            # Index error  catcher
                             if curr_word:
                                 curr_word = curr_word[:-1]
                                 curr_letter -= 1
@@ -113,9 +113,9 @@ def main():
                                     curr_letter += 1
 
             SCREEN.fill(GRIS_OSCURO)
-            # Draw title and underline
+            #titulo y subtitulo
             draw_title(letter_font)
-            # Draws base 5x6 grid for letters
+            # dibuja cuadricula
             for y in range(INTENTOS):
                 row_rects = []
                 for x in range(LETRAS):

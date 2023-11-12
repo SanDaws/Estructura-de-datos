@@ -80,12 +80,12 @@ def main():
                     sys.exit() # Se sale del programa (sys.exit()).
 
                 # Option to restart game
-                if flag_win or flag_lose: # Si la bandera flag_win o flag_lose está activa, significa que el juego ha terminado (ya sea ganado o perdido).
-                    if event.type == pygame.KEYDOWN:
-                        if flag_win:
+                if flag_win or flag_lose: # Este bloque de código se ejecuta si el juego ha terminado, ya sea ganado o perdido. Las banderas flag_win o flag_lose se activan dependiendo del resultado del juego.
+                    if event.type == pygame.KEYDOWN: # Se verifica si el evento es de tipo pygame.KEYDOWN, lo que significa que se ha presionado una tecla.
+                        if flag_win: # Si el juego ha sido ganado 
                             ACIERTOS += 1
                             PARTIDAS += 1
-                        if flag_lose:
+                        if flag_lose: # Si el juego ha sido perdido 
                             FALLOS += 1
                             PARTIDAS += 1
                         if event.key == pygame.K_r:

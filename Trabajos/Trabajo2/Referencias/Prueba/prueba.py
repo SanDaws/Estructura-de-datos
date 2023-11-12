@@ -38,9 +38,24 @@ ACIERTOS = 0
 FALLOS = 0
 PARTIDAS = 0
 #Se configuran fuentes y se inicia el reloj de Pygame.
+def cargar_wordlist(nombre_archivo):
+    diccionario = {}
+
+    with open(nombre_archivo, 'r') as archivo:
+        for linea in archivo:
+            palabra = linea.strip()  # Eliminar saltos de línea y espacios en blanco al inicio y al final
+            longitud = len(palabra)
+
+            # Agregar la palabra al conjunto correspondiente en el diccionario
+            if longitud in diccionario:
+                diccionario[longitud].add(palabra)
+            else:
+                diccionario[longitud] = {palabra}
+
+    return diccionario
+lemario=cargar_wordlist("wordlist.txt")
 def main():
-    global palabras
-    palabras = [word.replace("\n", "") for word in list(open("wordlist.txt"))] # # Se lee una lista de palabras desde un archivo ("wordlist.txt") y se almacenan en la variable palabras.
+
     clock = pygame.time.Clock() # Crea un objeto Clock de Pygame que se utilizará para controlar la velocidad del juego (FPS)
     letter_font = pygame.font.Font(None, 65) # Crea una fuente de Pygame con un tamaño de 65 píxeles para renderizar las letras en el juego.
     text = pygame.font.Font(None, 40) # Crea otra fuente de Pygame con un tamaño de 40 píxeles que se utilizará para renderizar texto adicional.
@@ -62,10 +77,9 @@ def main():
         # Temporizadores para gestionar la visualización de mensajes en la pantalla.
         timer_flag_1 = 0
         timer_flag_2 = 0
-        print(letras)
-        posibles=[palabra for palabra in palabras if len(palabra) == letras] # Lista de palabras con la longitud especificada por el jugador.
-        print(posibles)
-        palabra = random.choice(posibles) # Se elige aleatoriamente una palabra de la lista de posibles palabras.
+        palabras = lemario[letras]
+        print(palabras)
+        palabra = random.choice(list(palabras))
         print(palabra)
         # Se realizan algunas verificaciones (assert) para asegurarse de que la palabra seleccionada cumple con ciertas condiciones.
         assert (len(palabra) == LONGITUD_PALABRA)
@@ -168,8 +182,8 @@ def main():
 
 
             if flag_lose:
-                text_surface = text.render(f"Perdiste!{palabra} Presiona R para volver a jugar", True, ROJO)
-                x_pos = BASE_OFFSET_X - (CASILLA_ANCHO * (LETRAS / 2))
+                text_surface = text.render(f"Perdiste!  ({palabra})  Presiona R para volver a jugar", True, ROJO)
+                x_pos = BASE_OFFSET_X - (CASILLA_ANCHO*LETRAS/5)
                 y_pos = BASE_OFFSET_Y + (DY * 7) + (CASILLA_ALTO * INTENTOS)
                 SCREEN.blit(text_surface, (x_pos, y_pos))
 

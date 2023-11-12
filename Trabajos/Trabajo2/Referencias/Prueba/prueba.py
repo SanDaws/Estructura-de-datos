@@ -88,15 +88,15 @@ def main():
                         if flag_lose: # Si el juego ha sido perdido 
                             FALLOS += 1
                             PARTIDAS += 1
-                        if event.key == pygame.K_r:
+                        if event.key == pygame.K_r: # Se verifica si la tecla presionada es la tecla "R"
                             mensaje = f'Partidas: {PARTIDAS}, Aciertos: {ACIERTOS}, Fallos: {FALLOS}'
-                            with open('historial', 'w') as archivo:
-                                archivo.write(mensaje)
-                            main()
-                else:
+                            with open('historial', 'w') as archivo: 
+                                archivo.write(mensaje) # Se guarda un mensaje con las estadísticas del juego en el archivo "historial".
+                            main() # Se reinicia el juego llamando a la función main().
+                else: # Este bloque de código se encarga de procesar las teclas presionadas por el jugador
                     # Upon keypress
                     if event.type == pygame.KEYDOWN:
-                        if event.key == pygame.K_BACKSPACE:
+                        if event.key == pygame.K_BACKSPACE: # Si la tecla presionada es la tecla "Backspace", se verifica si la palabra actual (curr_word) no está vacía antes de intentar eliminar la última letra.
                             # Prevents IndexErrors
                             if curr_word:
                                 curr_word = curr_word[:-1]

@@ -79,7 +79,7 @@ def main():
                     pygame.quit() # Se realiza una limpieza adecuada cerrando Pygame
                     sys.exit() # Se sale del programa (sys.exit()).
 
-                # Option to restart game
+                # opcion para Reiniciar el juego
                 if flag_win or flag_lose: # Este bloque de código se ejecuta si el juego ha terminado, ya sea ganado o perdido. Las banderas flag_win o flag_lose se activan dependiendo del resultado del juego.
                     if event.type == pygame.KEYDOWN: # Se verifica si el evento es de tipo pygame.KEYDOWN, lo que significa que se ha presionado una tecla.
                         if flag_win: # Si el juego ha sido ganado 
@@ -97,20 +97,20 @@ def main():
                     # Upon keypress
                     if event.type == pygame.KEYDOWN:
                         if event.key == pygame.K_BACKSPACE: # Si la tecla presionada es la tecla "Backspace", se verifica si la palabra actual (curr_word) no está vacía antes de intentar eliminar la última letra.
-                            # Prevents IndexErrors
+                            # Prevenir errores de indices
                             if curr_word:
                                 curr_word = curr_word[:-1]
                                 curr_letter -= 1
-                        elif event.key == pygame.K_RETURN:
-                            if len(curr_word) == letras:
-                                if curr_word.lower() in palabras:
-                                    word_count += 1
-                                    used_words.append(curr_word)
-                                    curr_word = ""
-                                    curr_letter = 0
-                                else:
-                                    flag_invalid_word = True
-                                    timer_flag_1 = 0
+                        elif event.key == pygame.K_RETURN: # Si la tecla presionada es la tecla "Enter"
+                            if len(curr_word) == letras: # Se verifica si la longitud de la palabra actual (curr_word) es igual al número de letras objetivo (letras).
+                                if curr_word.lower() in palabras: # Se verifica si la palabra actual está en la lista de palabras (palabras).
+                                    word_count += 1 # Incrementa el contador de palabras adivinadas
+                                    used_words.append(curr_word) # Se agrega la palabra actual a la lista de palabras utilizadas
+                                    curr_word = "" # Se reinicia la palabra actual 
+                                    curr_letter = 0 # Se reinicia la palabra actual 
+                                else: # Si la palabra no está en la lista de palabras
+                                    flag_invalid_word = True #Sse activa la bandera flag_invalid_word
+                                    timer_flag_1 = 0 # Se reinicia el temporizador asociado (timer_flag_1)
                             else:
                                 flag_not_enough_letters = True
                                 timer_flag_2 = 0

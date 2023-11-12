@@ -70,7 +70,6 @@ def main():
         # Se realizan algunas verificaciones (assert) para asegurarse de que la palabra seleccionada cumple con ciertas condiciones.
         assert (len(palabra) == LONGITUD_PALABRA)
         assert (palabra.islower())
-<<<<<<< HEAD
         while True:                         #inico del bucle
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -79,7 +78,6 @@ def main():
 
                 # Reinicio del juego
                 if flag_win or flag_lose:
-=======
         
         #Bucle Principal del Juego:
 
@@ -91,7 +89,6 @@ def main():
 
                 # Option to restart game
                 if flag_win or flag_lose: # Si la bandera flag_win o flag_lose está activa, significa que el juego ha terminado (ya sea ganado o perdido).
->>>>>>> 62ca4f20098ac6c1d0b85116bccbae56fe89967d
                     if event.type == pygame.KEYDOWN:
                         if flag_win:
                             ACIERTOS += 1

@@ -111,14 +111,14 @@ def main():
                                 else: # Si la palabra no está en la lista de palabras
                                     flag_invalid_word = True #Sse activa la bandera flag_invalid_word
                                     timer_flag_1 = 0 # Se reinicia el temporizador asociado (timer_flag_1)
-                            else:
+                            else: 
                                 flag_not_enough_letters = True
                                 timer_flag_2 = 0
-                        else:
-                            if len(curr_word) < LONGITUD_PALABRA:
-                                if event.unicode.isalpha():
-                                    curr_word += event.unicode.upper()
-                                    curr_letter += 1
+                        else: # Si la tecla presionada no es "Backspace" ni "Enter"
+                            if len(curr_word) < LONGITUD_PALABRA: # Se verifica que la longitud de la palabra actual sea menor que la longitud objetivo de la palabra
+                                if event.unicode.isalpha(): # Si la tecla presionada es alfabética 
+                                    curr_word += event.unicode.upper() #  Se agrega la letra a la palabra actual (curr_word) en mayusculas.
+                                    curr_letter += 1 # Se incrementa el contador de letras actuales 
 
             SCREEN.fill(GRIS_OSCURO)
             # Draw title and underline

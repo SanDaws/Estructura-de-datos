@@ -21,50 +21,54 @@ INTENTOS = 6
 
 CASILLA_ANCHO = 50
 CASILLA_ALTO = 50
-# Pixeles entre cada recta
+# Pixels between each Rect
 DX = 10
 DY = 10
 X_PADDING = 5
 Y_PADDING = 5
-#coordenadas importantes
+# Leftmost topmost coordinate where the first rect will be drawn, should be symmetrical. Accounts for number of rects, pixels between rects and rect sizes.
 BASE_OFFSET_X = (WIDTH / 2) - ((LETRAS / 2) * DX) - ((LETRAS / 2) * CASILLA_ANCHO) + (((LETRAS + 1) % 2) * (DX / 2))
 BASE_OFFSET_Y = (HEIGHT / 2) - ((INTENTOS / 2) * DY) - ((INTENTOS / 2) * CASILLA_ALTO) + (
-            ((INTENTOS + 1) % 2) * (DY / 2))
+            ((INTENTOS + 1) % 2) * (DY / 2)) # Calcula la posición Y donde se debe iniciar la cuadrícula en función de la altura total de la pantalla (HEIGHT), el número de intentos (INTENTOS), el espacio vertical entre celdas (DY), la altura de cada celda (CASILLA_ALTO), y el espaciado adicional (Y_PADDING). La fórmula ajusta la posición según si el número de intentos es par o impar.
 
+# Seguimiento de las estadísticas del jugador a lo largo de múltiples partidas.
 ACIERTOS = 0
 FALLOS = 0
 PARTIDAS = 0
-
+#Se configuran fuentes y se inicia el reloj de Pygame.
 def main():
     global palabras
     palabras = [word.replace("\n", "") for word in list(open("wordlist.txt"))]
     clock = pygame.time.Clock()
     letter_font = pygame.font.Font(None, 65)
     text = pygame.font.Font(None, 40)
-    #funcion del juego
     def juego(letras):
         letras=int(letras)
         global LETRAS, ACIERTOS, PARTIDAS, FALLOS
         LETRAS = letras
         LONGITUD_PALABRA = LETRAS
-        used_words = []
-        curr_word = ""
-        word_count = 0
-        curr_letter = 0
-        rects = []
+        used_words = [] # Lista que almacenará las palabras ya utilizadas por el jugador.
+        curr_word = "" # Variable que almacena la palabra actualmente ingresada por el jugador.
+        word_count = 0 # Contador de palabras ingresadas correctamente.
+        curr_letter = 0 # Contador de letras ingresadas en la palabra actual.
+        rects = [] #  Lista que contendrá las coordenadas de las celdas en la cuadrícula.
+        #  Banderas para controlar diferentes estados del juego.
         flag_win = False
         flag_lose = False
         flag_invalid_word = False
         flag_not_enough_letters = False
+        # Temporizadores para gestionar la visualización de mensajes en la pantalla.
         timer_flag_1 = 0
         timer_flag_2 = 0
         print(letras)
-        posibles=[palabra for palabra in palabras if len(palabra) == letras]
+        posibles=[palabra for palabra in palabras if len(palabra) == letras] # Lista de palabras con la longitud especificada por el jugador.
         print(posibles)
-        palabra = random.choice(posibles)
+        palabra = random.choice(posibles) # Se elige aleatoriamente una palabra de la lista de posibles palabras.
         print(palabra)
+        # Se realizan algunas verificaciones (assert) para asegurarse de que la palabra seleccionada cumple con ciertas condiciones.
         assert (len(palabra) == LONGITUD_PALABRA)
         assert (palabra.islower())
+<<<<<<< HEAD
         while True:                         #inico del bucle
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -73,6 +77,19 @@ def main():
 
                 # Reinicio del juego
                 if flag_win or flag_lose:
+=======
+        
+        #Bucle Principal del Juego:
+
+        while True:
+            for event in pygame.event.get(): # Itera sobre todos los eventos de Pygame que han ocurrido desde la última vez que se llamó a pygame.event.get(). Los eventos pueden incluir acciones del teclado, ratón, etc
+                if event.type == pygame.QUIT: # Comprueba si el tipo de evento es "pygame.QUIT", lo que significa que el usuario ha intentado cerrar la ventana del juego.
+                    pygame.quit() # Se realiza una limpieza adecuada cerrando Pygame
+                    sys.exit() # Se sale del programa (sys.exit()).
+
+                # Option to restart game
+                if flag_win or flag_lose: # Si la bandera flag_win o flag_lose está activa, significa que el juego ha terminado (ya sea ganado o perdido).
+>>>>>>> 62ca4f20098ac6c1d0b85116bccbae56fe89967d
                     if event.type == pygame.KEYDOWN:
                         if flag_win:
                             ACIERTOS += 1

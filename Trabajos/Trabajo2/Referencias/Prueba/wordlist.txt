@@ -509,7 +509,9 @@ jarroso
 kilovar
 lanzar
 martir
-nocturn
+nocturna
+norturno
+noche
 oxido
 palido
 quimica
@@ -696,3 +698,12 @@ uteros
 viajes
 xerox
 yogures
+nilo
+avion
+abeja
+polar
+nadar
+sopla
+sopa
+arte
+am

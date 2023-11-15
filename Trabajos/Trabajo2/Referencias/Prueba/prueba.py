@@ -64,7 +64,7 @@ def main():
         global LETRAS, ACIERTOS, PARTIDAS, FALLOS
         LETRAS = letras
         LONGITUD_PALABRA = LETRAS
-        used_words = [] # Lista que almacenará las palabras ya utilizadas por el jugador.
+        ingresadas = [] # Lista que almacenará las palabras ya utilizadas por el jugador.
         curr_word = "" # Variable que almacena la palabra actualmente ingresada por el jugador.
         word_count = 0 # Contador de palabras ingresadas correctamente.
         curr_letter = 0 # Contador de letras ingresadas en la palabra actual.
@@ -119,7 +119,7 @@ def main():
                             if len(curr_word) == letras: # Se verifica si la longitud de la palabra actual (curr_word) es igual al número de letras objetivo (letras).
                                 if curr_word.lower() in palabras: # Se verifica si la palabra actual está en la lista de palabras (palabras).
                                     word_count += 1 # Incrementa el contador de palabras adivinadas
-                                    used_words.append(curr_word) # Se agrega la palabra actual a la lista de palabras utilizadas
+                                    ingresadas.append(curr_word) # Se agrega la palabra actual a la lista de palabras utilizadas
                                     curr_word = "" # Se reinicia la palabra actual 
                                     curr_letter = 0 # Se reinicia la palabra actual 
                                 else: # Si la palabra no está en la lista de palabras
@@ -174,70 +174,67 @@ def main():
                 timer_flag_2 = 0
 
             if flag_win:
-
                 text_surface = text.render("Ganaste! Presiona R para volver a jugar", True, ACIERTO)
-                x_pos = BASE_OFFSET_X - (CASILLA_ANCHO * (LETRAS / 5))
+                x_pos = BASE_OFFSET_X - (CASILLA_ANCHO * (letras / 5)) # Medio Centrado :)
                 y_pos = BASE_OFFSET_Y + (DY * 7) + (CASILLA_ALTO * INTENTOS)
                 SCREEN.blit(text_surface, (x_pos, y_pos))
 
 
             if flag_lose:
                 text_surface = text.render(f"Perdiste!  ({palabra})  Presiona R para volver a jugar", True, ROJO)
-                x_pos = BASE_OFFSET_X - (CASILLA_ANCHO*LETRAS/5)
+                x_pos = BASE_OFFSET_X - (CASILLA_ANCHO * (3)) # Medio Centrado :)
                 y_pos = BASE_OFFSET_Y + (DY * 7) + (CASILLA_ALTO * INTENTOS)
                 SCREEN.blit(text_surface, (x_pos, y_pos))
 
             if curr_word:
-                for letter_index in range(len(curr_word)):
-                    word_surface = letter_font.render(curr_word[letter_index], True, BLANCO)
+                for indice_letra in range(len(curr_word)):
+                    word_surface = letter_font.render(curr_word[indice_letra], True, BLANCO)
                     # [0] represents X coord, [1] Y.
                     SCREEN.blit(word_surface, (
-                    rects[word_count][letter_index][0] + X_PADDING, rects[word_count][letter_index][1] + Y_PADDING))
+                    rects[word_count][indice_letra][0] + X_PADDING, rects[word_count][indice_letra][1] + Y_PADDING))
 
-            # Renders letters and rects of words already inputted by player.
-            if used_words:
-                for word_index in range(len(used_words)):
-                    remaining_letters = list(palabra)
+            # Pintar las letras ingresadas.
+            if ingresadas:
+                for indice_palabra in range(len(ingresadas)):
+                    restantes = list(palabra)
                     num_correct = 0
-
-                    # Used to make sure that letters that appear more than once don't get counted if that letter appears in palabra only once.
-                    # EG: palabra = "proxy", word = "droop", and 'o' appears more than once. The second 'o' in droop does not get counted.
-                    same_indeces = [i for i, x in enumerate(zip(palabra, used_words[word_index].lower())) if
+                    correctas = [i for i, x in enumerate(zip(palabra, ingresadas[indice_palabra].lower())) if
                                     all(y == x[0] for y in x)]
-                    # Same indeces - if guessword is "beast" and usedword[word_index] is "toast", same indeces contains the indeces where same letters in the same positions collide, in this case, "a","s","t" - which have indeces of [2,3,4] respectively.
-                    if same_indeces:
-                        for index in range(len(same_indeces)):
+                    if correctas:
+                        for index in range(len(correctas)):
                             num_correct += 1
-                            remaining_letters[same_indeces[index]] = ""
+                            restantes[correctas[index]] = ""
                             curr_rect = pygame.Rect(
-                                (rects[word_index][same_indeces[index]][0], rects[word_index][same_indeces[index]][1]),
+                                (rects[indice_palabra][correctas[index]][0], rects[indice_palabra][correctas[index]][1]),
                                 (CASILLA_ANCHO, CASILLA_ALTO))
                             pygame.draw.rect(SCREEN, ACIERTO, curr_rect)
-                            past_letter_surface = letter_font.render(used_words[word_index][same_indeces[index]].upper(),
+                            past_letter_surface = letter_font.render(ingresadas[indice_palabra][correctas[index]].upper(),
                                                                      True, BLANCO)
-                            SCREEN.blit(past_letter_surface, (rects[word_index][same_indeces[index]][0] + X_PADDING,
-                                                              rects[word_index][same_indeces[index]][1] + Y_PADDING))
+                            SCREEN.blit(past_letter_surface, (rects[indice_palabra][correctas[index]][0] + X_PADDING,
+                                                              rects[indice_palabra][correctas[index]][1] + Y_PADDING))
 
-                    for letter_index in range(LONGITUD_PALABRA):
-                        if letter_index not in same_indeces:
+                    for indice_letra in range(LONGITUD_PALABRA):
+                        if indice_letra not in correctas:
                             curr_rect = pygame.Rect(
-                                (rects[word_index][letter_index][0], rects[word_index][letter_index][1]),
+                                (rects[indice_palabra][indice_letra][0], rects[indice_palabra][indice_letra][1]),
                                 (CASILLA_ANCHO, CASILLA_ALTO))
-                            cur_past_letter = used_words[word_index][letter_index].lower()
+                            cur_past_letter = ingresadas[indice_palabra][indice_letra].lower()
                             past_letter_surface = letter_font.render(cur_past_letter.upper(), True, BLANCO)
-                            # Incorrect Letters
-                            if cur_past_letter not in remaining_letters:
+                            # Las letras no estan en la palabra.
+                            if cur_past_letter not in restantes:
                                 pygame.draw.rect(SCREEN, ERROR, curr_rect)
-                            # Letter exists in word, but wrong position.
+                            # Las letras existen pero en la posición incorrecta.
                             else:
                                 pygame.draw.rect(SCREEN, MEDIO, curr_rect)
-                                remaining_letters[remaining_letters.index(cur_past_letter)] = ""
+                                restantes[restantes.index(cur_past_letter)] = ""
                             SCREEN.blit(past_letter_surface, (
-                            rects[word_index][letter_index][0] + X_PADDING, rects[word_index][letter_index][1] + Y_PADDING))
-     # Win/lose condition
+                            rects[indice_palabra][indice_letra][0] + X_PADDING, rects[indice_palabra][indice_letra][1] + Y_PADDING))
+                    # Condiciones Perder / Ganar
                     if num_correct == letras:
+                        # Si el numero de letras correctas es igual al numero de letras de la palabra.
                         flag_win = True
-                    elif len(used_words) == INTENTOS:
+                    elif len(ingresadas) == INTENTOS:
+                        # Si el numero de palabras ingresadas es igual al numero de intentos.
                         flag_lose = True
 
 

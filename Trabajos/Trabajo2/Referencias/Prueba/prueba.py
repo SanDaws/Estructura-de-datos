@@ -1,11 +1,20 @@
+# Trabajo 2 Wordle Estructura de Datos
+# Santiago Castro Giraldo
+# Maria Alejandra Echavarria Correa
+# Jonatan Estiven Sanchez Vargas
+# Jhon W. Lopez Sepulveda
+# Yamid Andres Campo Gallego
+
+# Importar las librerias necesarias
 import pygame, sys, random
 
+
+# Inicializar y definir valores
 pygame.init()
-pygame.display.set_caption("Wordle")
+pygame.display.set_caption("Wordle!")
 WIDTH, HEIGHT = 800, 800
 SCREEN = pygame.display.set_mode((WIDTH, HEIGHT))
 FPS = 30
-
 GRIS = (100, 100, 100)
 GRIS_OSCURO= (20, 20, 20)
 BLANCO = (255, 255, 255)
@@ -78,9 +87,9 @@ def main():
         timer_flag_1 = 0
         timer_flag_2 = 0
         palabras = lemario[letras]
-        print(palabras)
+        #print(palabras)
         palabra = random.choice(list(palabras))
-        print(palabra)
+        #print(palabra)
         # Se realizan algunas verificaciones (assert) para asegurarse de que la palabra seleccionada cumple con ciertas condiciones.
         assert (len(palabra) == LONGITUD_PALABRA)
         assert (palabra.islower())
@@ -135,9 +144,7 @@ def main():
                                     curr_letter += 1 # Se incrementa el contador de letras actuales 
 
             SCREEN.fill(GRIS_OSCURO)
-            # Draw title and underline
             draw_title(letter_font)
-            # Draws base 5x6 grid for letters
             BASE_OFFSET_X = (WIDTH - (CASILLA_ANCHO * LETRAS) - (DX * (LETRAS - 1))) / 2
             BASE_OFFSET_Y = (HEIGHT - (CASILLA_ALTO * INTENTOS) - (DY * (INTENTOS - 1))) / 2
             for y in range(INTENTOS):
@@ -172,7 +179,7 @@ def main():
             if timer_flag_2 == TEXT_TIMER * FPS:
                 flag_not_enough_letters = False
                 timer_flag_2 = 0
-
+            # Resultados de la partida, impresión en pantalla
             if flag_win:
                 text_surface = text.render("Ganaste! Presiona R para volver a jugar", True, ACIERTO)
                 x_pos = BASE_OFFSET_X - (CASILLA_ANCHO * (letras / 5)) # Medio Centrado :)
@@ -189,7 +196,6 @@ def main():
             if curr_word:
                 for indice_letra in range(len(curr_word)):
                     word_surface = letter_font.render(curr_word[indice_letra], True, BLANCO)
-                    # [0] represents X coord, [1] Y.
                     SCREEN.blit(word_surface, (
                     rects[word_count][indice_letra][0] + X_PADDING, rects[word_count][indice_letra][1] + Y_PADDING))
 
@@ -229,6 +235,7 @@ def main():
                                 restantes[restantes.index(cur_past_letter)] = ""
                             SCREEN.blit(past_letter_surface, (
                             rects[indice_palabra][indice_letra][0] + X_PADDING, rects[indice_palabra][indice_letra][1] + Y_PADDING))
+
                     # Condiciones Perder / Ganar
                     if num_correct == letras:
                         # Si el numero de letras correctas es igual al numero de letras de la palabra.
@@ -305,16 +312,12 @@ def main():
             selected_option=draw_menu()
 
             if selected_option != None:
-                print(f'Se ha seleccionado la opción: {options[selected_option]}')
                 juego(options[selected_option][0])
                 running = False
 
     menu_principal()
 
 def draw_title(font):
-        pygame.draw.line(SCREEN, BLANCO, (BASE_OFFSET_X - CASILLA_ANCHO, BASE_OFFSET_Y - CASILLA_ALTO), (
-            BASE_OFFSET_X + (CASILLA_ANCHO * (LETRAS + 1)) + (DX * (LETRAS - 1)), BASE_OFFSET_Y - CASILLA_ALTO),
-                         width=1)
         title_surface = font.render("WORDLE", True, BLANCO)
         SCREEN.blit(title_surface, (BASE_OFFSET_X + CASILLA_ANCHO, BASE_OFFSET_Y - (CASILLA_ALTO * 2)))
 

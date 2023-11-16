@@ -63,6 +63,16 @@ def cargar_wordlist(nombre_archivo):
 
     return diccionario
 lemario=cargar_wordlist("wordlist.txt")
+
+def diccionario_palabra(palabra):
+    dic={}
+    for e in range(len(palabra)):
+        if palabra[e] in dic:
+            dic[palabra[e]].add(e)
+        else:
+            dic[palabra[e]] = set()
+            dic[palabra[e]].add(e)
+    return dic
 def main():
 
     clock = pygame.time.Clock() # Crea un objeto Clock de Pygame que se utilizará para controlar la velocidad del juego (FPS)
@@ -87,9 +97,10 @@ def main():
         timer_flag_1 = 0
         timer_flag_2 = 0
         palabras = lemario[letras]
-        #print(palabras)
+        print(palabras)
         palabra = random.choice(list(palabras))
-        #print(palabra)
+        dic_palabra = diccionario_palabra(palabra)
+        print(palabra)
         # Se realizan algunas verificaciones (assert) para asegurarse de que la palabra seleccionada cumple con ciertas condiciones.
         assert (len(palabra) == LONGITUD_PALABRA)
         assert (palabra.islower())
@@ -202,45 +213,41 @@ def main():
             # Pintar las letras ingresadas.
             if ingresadas:
                 for indice_palabra in range(len(ingresadas)):
-                    restantes = list(palabra)
-                    num_correct = 0
-                    correctas = [i for i, x in enumerate(zip(palabra, ingresadas[indice_palabra].lower())) if
-                                    all(y == x[0] for y in x)]
-                    if correctas:
-                        for index in range(len(correctas)):
-                            num_correct += 1
-                            restantes[correctas[index]] = ""
-                            curr_rect = pygame.Rect(
-                                (rects[indice_palabra][correctas[index]][0], rects[indice_palabra][correctas[index]][1]),
-                                (CASILLA_ANCHO, CASILLA_ALTO))
-                            pygame.draw.rect(SCREEN, ACIERTO, curr_rect)
-                            past_letter_surface = letter_font.render(ingresadas[indice_palabra][correctas[index]].upper(),
-                                                                     True, BLANCO)
-                            SCREEN.blit(past_letter_surface, (rects[indice_palabra][correctas[index]][0] + X_PADDING,
-                                                              rects[indice_palabra][correctas[index]][1] + Y_PADDING))
-
-                    for indice_letra in range(LONGITUD_PALABRA):
-                        if indice_letra not in correctas:
-                            curr_rect = pygame.Rect(
-                                (rects[indice_palabra][indice_letra][0], rects[indice_palabra][indice_letra][1]),
-                                (CASILLA_ANCHO, CASILLA_ALTO))
-                            cur_past_letter = ingresadas[indice_palabra][indice_letra].lower()
-                            past_letter_surface = letter_font.render(cur_past_letter.upper(), True, BLANCO)
-                            # Las letras no estan en la palabra.
-                            if cur_past_letter not in restantes:
-                                pygame.draw.rect(SCREEN, ERROR, curr_rect)
-                            # Las letras existen pero en la posición incorrecta.
+                    ingresada=ingresadas[indice_palabra]
+                    ingresada=ingresada.lower()
+                    num_correct=0
+                    for indice_letra in range(letras):
+                        curr_rect = pygame.Rect(
+                            (rects[indice_palabra][indice_letra][0], rects[indice_palabra][indice_letra][1]),
+                            (CASILLA_ANCHO, CASILLA_ALTO))
+                        cur_past_letter = ingresadas[indice_palabra][indice_letra].lower()
+                        past_letter_surface = letter_font.render(cur_past_letter.upper(), True, BLANCO)
+                        if ingresada[indice_letra] in dic_palabra:
+                            # La letra esta en el indice correcto
+                            if indice_letra in dic_palabra[ingresada[indice_letra]]:
+                                pygame.draw.rect(SCREEN, ACIERTO, curr_rect)
+                                num_correct += 1
+                                # Condiciones Ganar
+                                if num_correct == letras:
+                                    # Si el numero de letras correctas es igual al numero de letras de la palabra.
+                                    flag_win = True
                             else:
+                                # La letra esta en la palabra pero en el indice incorrecto
                                 pygame.draw.rect(SCREEN, MEDIO, curr_rect)
-                                restantes[restantes.index(cur_past_letter)] = ""
-                            SCREEN.blit(past_letter_surface, (
-                            rects[indice_palabra][indice_letra][0] + X_PADDING, rects[indice_palabra][indice_letra][1] + Y_PADDING))
 
-                    # Condiciones Perder / Ganar
-                    if num_correct == letras:
-                        # Si el numero de letras correctas es igual al numero de letras de la palabra.
-                        flag_win = True
-                    elif len(ingresadas) == INTENTOS:
+                        else:
+                            # La letra no esta en la palabra
+                            pygame.draw.rect(SCREEN, ERROR, curr_rect)
+
+
+                        SCREEN.blit(past_letter_surface, (
+                            rects[indice_palabra][indice_letra][0] + X_PADDING,
+                            rects[indice_palabra][indice_letra][1] + Y_PADDING))
+
+
+
+                # Condiciones perder
+                if len(ingresadas) == INTENTOS and flag_win==False:
                         # Si el numero de palabras ingresadas es igual al numero de intentos.
                         flag_lose = True
 

@@ -539,6 +539,9 @@ lapida
 marmol
 numero
 ovulo
+tipa
+pata
+pala
 pajaro
 quinua
 rapido

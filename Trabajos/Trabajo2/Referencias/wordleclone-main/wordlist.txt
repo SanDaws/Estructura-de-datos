@@ -4,6 +4,7 @@ abate
 abaya
 abbey
 abbot
+pal
 abets
 abhor
 abide
